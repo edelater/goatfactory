@@ -23,6 +23,9 @@ const createGrid = () => {
     }
     tr.append($(`<td id='${idx}'/>`));
   });
+  $('td').css({
+    width: `${100 / grid.cols}%`
+  })
 };
 
 // handle click

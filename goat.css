@@ -3,6 +3,7 @@ html, body, table {
   padding: 0;
   height: 100%;
   width: 100%;
+  user-select: none;  
 }
 td {
   background-color: #99d8c9;
