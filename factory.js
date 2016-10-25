@@ -1,6 +1,6 @@
 // create the grid:
-const rows = 50;
-const cols = 50;
+const rows = 10;
+const cols = 10;
 const grid = _.times(rows * cols, _.constant(0));;
 
 const createGrid = () => {
@@ -41,7 +41,7 @@ const attachEvents = () => {
 };
 
 const highlightFibonacciRanges = () => {
-
+  // todo:
 };
 
 // let's go!!
