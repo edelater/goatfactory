@@ -19,7 +19,7 @@ td {
 }
 
 .green {
-  animation-name: flash-yellow;
+  animation-name: flash-green;
 }
 
 @keyframes flash-yellow {  
