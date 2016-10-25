@@ -78,7 +78,6 @@ const highlightFibonacciRanges = () => {
 
     // no wrapping around (as in: last 3 cells of row 1, first 2 cells of row 2)
     if (i % grid.cols > grid.cols - patternLength) {
-      i += 5;
       continue;
     }
 
