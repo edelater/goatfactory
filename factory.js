@@ -2,6 +2,8 @@
 const rows = 10;
 const cols = 10;
 const grid = _.times(rows * cols, _.constant(0));;
+const fCache = [];
+window.goat = fCache;
 
 const createGrid = () => {
   const table = $('table');
@@ -19,6 +21,7 @@ const createGrid = () => {
 const attachEvents = () => {
   $('td').on('click', (e) => {
     const idx = parseInt(e.target.id);
+    const func = grid[idx] === 0  ? i => 1 : i => i + 1;
 
     const r = Math.floor(idx / rows);
     const c = idx % cols;
@@ -27,7 +30,6 @@ const attachEvents = () => {
       _.times(cols, i => c + i * rows)
     ));
 
-    const func = i => 1 + (grid[idx] === 0 ? 0 : i);
     _.each(mod, (i) => {
       grid[i] = func.apply(this, [grid[i]]);
       $(`#${i}`).text(grid[i] === 0 ? '' : grid[i]).addClass('yellow');
@@ -42,6 +44,20 @@ const attachEvents = () => {
 
 const highlightFibonacciRanges = () => {
   // todo:
+
+};
+
+const isFibo = (n) => {
+  const isPerfectSquare = (x) => {
+    const s = Math.sqrt(x);
+    return (s * s == x);
+  };
+
+  return isPerfectSquare(5 * n * n + 4) || isPerfectSquare(5 * n * n - 4);
+};
+
+const getNthFibo = (n) => {
+  return n <= 2 ? 1 : getNthFibo(n - 1) + getNthFibo(n - 2); 
 };
 
 // let's go!!
