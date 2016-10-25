@@ -1,7 +1,7 @@
 // the grid
 const grid = {
-  rows: 50,
-  cols: 50
+  rows: 20,
+  cols: 20
 };
 
 // flattened grid
