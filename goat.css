@@ -1,0 +1,32 @@
+html, body, table {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+td {
+  background-color: #99d8c9;
+  text-align: center;
+  cursor: pointer;
+}
+
+.yellow, .green {
+  animation-duration: 0.3s;
+}
+
+.yellow {
+  animation-name: flash-yellow;
+}
+
+.green {
+  animation-name: flash-yellow;
+}
+
+@keyframes flash-yellow {  
+  from { background: yellow; }
+  to   { background: default; }
+}
+@keyframes flash-green {  
+  from { background: lightgreen; }
+  to   { background: default; }
+}
