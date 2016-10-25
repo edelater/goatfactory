@@ -82,9 +82,10 @@ const highlightFibonacciRanges = () => {
     }
 
     // look for normal horizontal range
-    const needle = `-${flat.slice(i, i + 5).join('-')}-`;
+    const slice = flat.slice(i, i + 5);
+    const needle = `-${slice.join('-')}-`;
     // look for reversed ranges?
-    const reversed = `-${flat.slice(i, i + 5).reverse().join('-')}-`;
+    const reversed = `-${slice.reverse().join('-')}-`;
 
     // TODO: look for vertical range
     // TODO: look for diagonal range
