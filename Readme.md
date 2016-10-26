@@ -31,7 +31,7 @@ var row = Math.floor(6/4) = 1
 a simple mod operation with the number of cols, shows us in which column it is. 
 as in: how many times did i go to the end of a line, and how many is left then?
 ```
-var column = 5 % 4 = 1, so it must be column 1
+var column = 6 % 4 = 2, so it must be column 2
 ```  
 
 So I clicked cell (1,2). What value does it have now? Well, we know the index 
