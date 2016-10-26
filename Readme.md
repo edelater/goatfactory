@@ -113,6 +113,7 @@ Next up: checking for sequences of say length: 3 in the grid.
 We initialize our cache with `[1,1]` since ones suck.
 
 The idea:
+
 1. get the highest number in the grid
 2. check if the cache contains a number at least as big as this `max`
 3. if it doesn't? fill the cache until at least this `max`
