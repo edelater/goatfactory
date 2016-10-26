@@ -1,18 +1,18 @@
-// the grid
-const grid = {
-  rows: 20,
-  cols: 20
-};
+let grid;
+let flat;
+let patternLength;
 
-// flattened grid
-const flat = _.times(grid.rows * grid.cols, _.constant(0));;
-
-// fibonacci
 const cache = [1, 1];
-const patternLength = 5;
 
-// create grid/table
-const createGrid = () => {
+const init = (rows = 50, cols = 50, length = 5) => {
+  grid = {
+    rows: rows,
+    cols: cols
+  };
+
+  flat = _.times(grid.rows * grid.cols, _.constant(0));;
+  patternLength = length;
+
   const table = $('table');
   let tr;
 
@@ -25,36 +25,28 @@ const createGrid = () => {
   });
   $('td').css({
     width: `${100 / grid.cols}%`
-  })
+  });
+
+  attachEvents();
 };
 
-// handle click
 const attachEvents = () => {
   $('td').on('click', (e) => {
     const idx = parseInt(e.target.id);
-
-    // if current value === 0, return 1, else current + 1;
     const func = flat[idx] === 0 ? i => 1 : i => i + 1;
-
-    // get row and column from index:
     const row = Math.floor(idx / grid.rows);
     const col = idx % grid.cols;
-
-    // _.uniq, because the clicked cell is in both ranges:
     const mod = _.uniq(_.concat(
-      _.times(grid.rows, i => row * grid.rows + i), // row values
-      _.times(grid.cols, i => col + i * grid.rows)  // col values
+      _.times(grid.cols, i => row * grid.cols + i),
+      _.times(grid.rows, i => col + i * grid.rows)
     ));
 
-    // handle modified cells:
     _.each(mod, (i) => {
-      // spank goat
       flat[i] = func.apply(this, [flat[i]]);
 
       const elm = $(`#${i}`);
-      const cur = parseInt($(elm).text() || 0); // text may be emtpy :-(
+      const cur = parseInt($(elm).text() || 0);
 
-      // only highlight changed items:
       if (cur !== flat[i]) {
         elm.addClass('yellow')
       }
@@ -67,46 +59,27 @@ const attachEvents = () => {
   });
 };
 
-// we are going to search for ranges of xx length
-// look for -2-3-5-8-13- in the 'modified' cache 
-// which looks like: 
-// -1-1-2-3-5-8-13-21-34-55-89-
 const highlightFibonacciRanges = () => {
   const max = _.max(flat);
   ensureCache(max);
 
-  // take strips of patternLength pieces, and check if they match:
   const haystack = `-${cache.join('-')}-`;
   for (let i = 0; i < flat.length - patternLength; i++) {
 
-    // no wrapping around (as in: last 3 cells of row 1, first 2 cells of row 2)
     if (i % grid.cols > grid.cols - patternLength) {
       continue;
     }
 
-    // look for normal horizontal range
-    const slice = flat.slice(i, i + 5);
+    const slice = flat.slice(i, i + patternLength);
     const needle = `-${slice.join('-')}-`;
-    // look for reversed ranges?
-    const reversed = `-${slice.reverse().join('-')}-`;
-
-    // TODO: look for vertical range
-    // TODO: look for diagonal range
-
-    const found = haystack.indexOf(needle) > -1 || haystack.indexOf(reversed) > -1;
-    if (found) {
-      // fuck yeah!
+    if (haystack.indexOf(needle) > -1) {
       for (let j = i; j < i + patternLength; j++) {
-        // clear text:
         const elm = $(`#${j}`).text('');
-        // clear 'matrix':
         flat[j] = 0;
-        // herd goats:
         elm.addClass('green');
       }
     }
   }
-  // pff 
   setTimeout(() => $('td').removeClass('green'), 1000);
 };
 
@@ -114,7 +87,6 @@ const highlightFibonacciRanges = () => {
 const ensureCache = (n) => {
   const max = _.max(cache);
   if (n > max) {
-    // fill cache until at least a number bigger than n is in it:
     const idx = max === 1 ? 2 : cache.indexOf(max);
     let prev = cache[idx - 1];
     let res = max;
@@ -125,7 +97,3 @@ const ensureCache = (n) => {
     }
   }
 };
-
-// let's go!!
-createGrid();
-attachEvents();
